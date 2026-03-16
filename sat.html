@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Math Prep — Review & Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #151820;
+    --card: #1b1f2a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8eaf0;
+    --muted: #7a7f96;
+    --accent: #5b8eff;
+    --accent2: #ff6b6b;
+    --accent3: #43e8a0;
+    --accent4: #ffd166;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(91,142,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91,142,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* Header */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .header-tag {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  /* Nav tabs */
+  .nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 36px;
+    background: var(--surface);
+    padding: 5px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+  .nav-btn {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .02em;
+  }
+  .nav-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(91,142,255,0.35);
+  }
+  .nav-btn:hover:not(.active) { color: var(--text); background: var(--border); }
+
+  /* Section */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Section header */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 20px;
+    height: 6px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 20px;
+    transition: width .4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  /* Problem cards */
+  .prob-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 14px;
+    transition: border-color .2s;
+    animation: fadeUp .3s ease both;
+  }
+  .prob-card:hover { border-color: var(--border2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .prob-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .prob-num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .prob-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .tag-algebra { background: rgba(91,142,255,0.15); color: var(--accent); }
+  .tag-word { background: rgba(255,107,107,0.15); color: var(--accent2); }
+
+  .prob-q {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+  .prob-q .eq {
+    font-family: 'Courier New', monospace;
+    background: rgba(91,142,255,0.1);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .answer-area {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-show {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-show:hover { background: var(--surface); color: var(--text); border-color: var(--accent); }
+  .btn-show.open { background: rgba(67,232,160,0.1); color: var(--accent3); border-color: rgba(67,232,160,0.3); }
+
+  .answer-text {
+    display: none;
+    font-size: 14px;
+    color: var(--accent3);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .answer-text.open { display: block; }
+
+  /* Score summary */
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .score-num {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .score-num span { font-size: 20px; color: var(--muted); font-weight: 400; }
+  .score-desc { font-size: 14px; color: var(--muted); font-weight: 300; margin-top: 4px; }
+
+  /* ============ VOCABULARY ============ */
+  .vocab-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .filter-btn.active { background: var(--accent4); color: #111; border-color: var(--accent4); }
+  .filter-btn:hover:not(.active) { color: var(--text); border-color: var(--border2); }
+
+  .reveal-btn {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 24px;
+  }
+  .reveal-btn:hover { background: var(--surface); color: var(--text); }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .vocab-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: all .2s;
+    animation: fadeUp .3s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+  .vocab-card.cat-ops::before { background: var(--accent); }
+  .vocab-card.cat-kw::before { background: var(--accent2); }
+  .vocab-card.cat-ineq::before { background: var(--accent3); }
+  .vocab-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+  .vocab-card.revealed { border-color: rgba(91,142,255,0.25); }
+
+  .vocab-en {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: -.01em;
+  }
+  .vocab-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .vocab-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 12px;
+  }
+  .vocab-mn-wrap {
+    position: relative;
+    min-height: 24px;
+  }
+  .vocab-mn {
+    font-size: 15px;
+    color: var(--accent4);
+    font-weight: 400;
+    filter: blur(7px);
+    user-select: none;
+    transition: filter .25s;
+    line-height: 1.4;
+  }
+  .vocab-card.revealed .vocab-mn { filter: none; }
+  .vocab-mn-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-family: var(--font-display);
+    transition: opacity .25s;
+  }
+  .vocab-card.revealed .vocab-mn-hint { opacity: 0; pointer-events: none; }
+
+  .cat-heading {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cat-heading .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .cat-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Flashcard mode */
+  .flashcard-mode {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .flashcard-mode.active { display: block; }
+  .flashcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin: 0 auto 24px;
+    max-width: 520px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .25s;
+    position: relative;
+    perspective: 1000px;
+  }
+  .flashcard:hover { border-color: var(--border2); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .fc-front, .fc-back {
+    transition: opacity .2s;
+  }
+  .fc-front.hidden, .fc-back.hidden { display: none; }
+  .fc-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .fc-word {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+  }
+  .fc-front .fc-word { color: var(--text); }
+  .fc-back .fc-word { color: var(--accent4); }
+  .fc-hint { font-size: 13px; color: var(--muted); margin-top: 10px; font-style: italic; font-weight: 300; }
+  .fc-tap { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-family: var(--font-display); }
+
+  .fc-controls { display: flex; gap: 12px; justify-content: center; align-items: center; margin-top: 8px; }
+  .fc-btn {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .fc-btn:hover { background: var(--surface); color: var(--text); }
+  .fc-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 16px rgba(91,142,255,0.3); }
+  .fc-counter { font-family: var(--font-display); font-size: 13px; color: var(--muted); }
+
+  .list-mode { }
+  .list-mode.hidden { display: none; }
+
+  /* Mode toggle */
+  .mode-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    align-items: center;
+  }
+  .mode-toggle span { font-size: 12px; color: var(--muted); margin-right: 4px; font-weight: 300; }
+
+  footer {
+    margin: 60px 0 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  footer strong { color: var(--accent); font-family: var(--font-display); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-tag">SAT Math Prep · Algebra</div>
+    <h1>Review & <span>Vocabulary</span></h1>
+    <p>10 practice problems + 15 English–Mongolian math vocabulary cards for your upcoming lesson.</p>
+  </header>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('review')">Review Problems</button>
+    <button class="nav-btn" onclick="switchTab('vocab')">Vocabulary</button>
+  </div>
+
+  <!-- ======= REVIEW SECTION ======= -->
+  <div class="section active" id="tab-review">
+    <div class="score-card">
+      <div>
+        <div class="score-num" id="score-display">0 <span>/ 10</span></div>
+        <div class="score-desc">answers revealed so far</div>
+      </div>
+      <div style="flex:1">
+        <div class="progress-label" id="prog-label">0 of 10 revealed</div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-bar"></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Algebra — find x</div>
+
+    <div class="prob-card" style="animation-delay:.05s">
+      <div class="prob-meta">
+        <span class="prob-num">01</span>
+        <span class="prob-tag tag-algebra">Find x</span>
+      </div>
+      <div class="prob-q">Solve: <span class="eq">2x + 5 = 13</span></div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x = 4 &nbsp;→&nbsp; 2(4) + 5 = 13 ✓</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.1s">
+      <div class="prob-meta">
+        <span class="prob-num">02</span>
+        <span class="prob-tag tag-algebra">Find x</span>
+      </div>
+      <div class="prob-q">Solve: <span class="eq">3x − 7 = 11</span></div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x = 6 &nbsp;→&nbsp; 3(6) − 7 = 18 − 7 = 11 ✓</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.15s">
+      <div class="prob-meta">
+        <span class="prob-num">03</span>
+        <span class="prob-tag tag-algebra">Find x</span>
+      </div>
+      <div class="prob-q">Solve: <span class="eq">5x = 4x + 9</span></div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x = 9 &nbsp;→&nbsp; move 4x to the left: 5x − 4x = 9 ✓</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.2s">
+      <div class="prob-meta">
+        <span class="prob-num">04</span>
+        <span class="prob-tag tag-algebra">Find x</span>
+      </div>
+      <div class="prob-q">Solve: <span class="eq">4(x + 2) = 20</span></div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x = 3 &nbsp;→&nbsp; 4x + 8 = 20 → 4x = 12 → x = 3 ✓</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.25s">
+      <div class="prob-meta">
+        <span class="prob-num">05</span>
+        <span class="prob-tag tag-algebra">Find x</span>
+      </div>
+      <div class="prob-q">Solve: <span class="eq">2x / 3 = 8</span></div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x = 12 &nbsp;→&nbsp; multiply both sides by 3: 2x = 24 → x = 12 ✓</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:36px">Word problems</div>
+
+    <div class="prob-card" style="animation-delay:.3s">
+      <div class="prob-meta">
+        <span class="prob-num">06</span>
+        <span class="prob-tag tag-word">Word Problem</span>
+      </div>
+      <div class="prob-q">A number plus 8 equals 21. What is the number?</div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x + 8 = 21 → x = 13</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.35s">
+      <div class="prob-meta">
+        <span class="prob-num">07</span>
+        <span class="prob-tag tag-word">Word Problem</span>
+      </div>
+      <div class="prob-q">A pen costs $3. John buys some pens and pays $18 total. How many pens did he buy?</div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">3x = 18 → x = 6 pens</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.4s">
+      <div class="prob-meta">
+        <span class="prob-num">08</span>
+        <span class="prob-tag tag-word">Word Problem</span>
+      </div>
+      <div class="prob-q">Sarah is 5 years older than Tom. Sarah is 17. How old is Tom?</div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">T + 5 = 17 → T = 12 years old</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.45s">
+      <div class="prob-meta">
+        <span class="prob-num">09</span>
+        <span class="prob-tag tag-word">Word Problem</span>
+      </div>
+      <div class="prob-q">A shirt now costs $24, which is $6 less than the original price. What was the original price?</div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">x − 6 = 24 → x = $30</div>
+      </div>
+    </div>
+
+    <div class="prob-card" style="animation-delay:.5s">
+      <div class="prob-meta">
+        <span class="prob-num">10</span>
+        <span class="prob-tag tag-word">Word Problem</span>
+      </div>
+      <div class="prob-q">Two friends share 36 candies equally. Then one friend gives 4 to the other. How many does the second friend have now?</div>
+      <div class="answer-area">
+        <button class="btn-show" onclick="reveal(this)">Show Answer</button>
+        <div class="answer-text">Each starts with 36 ÷ 2 = 18. Second friend: 18 + 4 = 22 candies.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= VOCAB SECTION ======= -->
+  <div class="section" id="tab-vocab">
+
+    <div class="mode-toggle">
+      <span>Mode:</span>
+      <button class="filter-btn active" id="mode-list" onclick="setMode('list')">List</button>
+      <button class="filter-btn" id="mode-flash" onclick="setMode('flash')">Flashcards</button>
+    </div>
+
+    <!-- List mode -->
+    <div class="list-mode" id="list-mode">
+      <button class="reveal-btn" onclick="revealAll()">Reveal All Mongolian</button>
+
+      <div class="cat-heading"><span class="dot" style="background:var(--accent)"></span>Basic Operations</div>
+      <div class="vocab-grid" id="grid-ops">
+        <!-- filled by JS -->
+      </div>
+
+      <div class="cat-heading"><span class="dot" style="background:var(--accent2)"></span>Word Problem Keywords</div>
+      <div class="vocab-grid" id="grid-kw">
+      </div>
+
+      <div class="cat-heading"><span class="dot" style="background:var(--accent3)"></span>Inequality Words</div>
+      <div class="vocab-grid" id="grid-ineq">
+      </div>
+    </div>
+
+    <!-- Flashcard mode -->
+    <div class="flashcard-mode" id="flash-mode">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-front" id="fc-front">
+          <div class="fc-label">English</div>
+          <div class="fc-word" id="fc-en-word">Plus / Add </div>
+          <div class="fc-hint" id="fc-hint">used in: "the sum of x and 5"</div>
+          <div class="fc-tap" style="margin-top:24px">tap to reveal →</div>
+        </div>
+        <div class="fc-back hidden" id="fc-back">
+          <div class="fc-label">Монгол</div>
+          <div class="fc-word" id="fc-mn-word">Нэмэх / нийлбэр</div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="fc-btn" onclick="prevCard()">← Prev</button>
+        <span class="fc-counter" id="fc-counter">1 / 15</span>
+        <button class="fc-btn primary" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Made for <strong>SAT Math Prep</strong> · Algebra Unit · Good luck! 🎯
+  </footer>
+</div>
+
+<script>
+  const vocabData = {
+    ops: [
+      { en: 'Plus / Add', mn: 'Нэмэх / нийлбэр', hint: 'used in: "the sum of x and 5"' },
+      { en: 'Minus / Subtract', mn: 'Хасах / зөрөө', hint: 'used in: "5 less than x"' },
+      { en: 'Multiply', mn: 'Үржих / үржвэр', hint: 'used in: "3 times x"' },
+      { en: 'Divide', mn: 'Хуваах / хэлтэс', hint: 'used in: "split equally"' },
+      { en: 'Equals', mn: 'Тэнцүү / тэнцэх', hint: 'used in: "x equals 5"' },
+    ],
+    kw: [
+      { en: 'Total / Sum', mn: 'Нийт / нийлбэр дүн', hint: '"the total cost is..." → add everything' },
+      { en: 'Increased by', mn: 'Нэмэгдсэн / өссөн', hint: '"price increased by $5" → +5' },
+      { en: 'Decreased by', mn: 'Буурсан / хасагдсан', hint: '"score decreased by 3" → −3' },
+      { en: 'Per / Each', mn: 'Тус бүр / нэг бүрт', hint: '"$5 per item" → multiply' },
+      { en: 'Cost / Price / Charge', mn: 'Үнэ / зардал / төлбөр', hint: '"the charge is $10"' },
+      { en: 'Difference', mn: 'Ялгаа / зөрөө', hint: '"the difference between x and 3" → subtract' },
+      { en: 'Product', mn: 'Үржвэр', hint: '"the product of 2 and x" → 2 × x' },
+      { en: 'Remaining / Left over', mn: 'Үлдсэн / үлдэгдэл', hint: '"how many remain?" → subtract' },
+    ],
+    ineq: [
+      { en: 'At least / No less than', mn: 'Наад зах нь / доогүй', hint: '→ means ≥ (greater than or equal)' },
+      { en: 'At most / No more than', mn: 'Хамгийн ихдээ / хэтрэхгүй', hint: '→ means ≤ (less than or equal)' },
+      { en: 'Greater than', mn: 'Илүү / их', hint: '→ the symbol >' },
+      { en: 'Less than', mn: 'Бага', hint: '→ the symbol <' },
+      { en: 'Between', mn: 'Хооронд / дунд', hint: '"x is between 3 and 8" → 3 < x < 8' },
+    ]
+  };
+
+  const allVocab = [...vocabData.ops, ...vocabData.kw, ...vocabData.ineq];
+
+  function buildVocabCards() {
+    ['ops', 'kw', 'ineq'].forEach(cat => {
+      const grid = document.getElementById('grid-' + cat);
+      grid.innerHTML = '';
+      vocabData[cat].forEach((v, i) => {
+        const card = document.createElement('div');
+        card.className = `vocab-card cat-${cat}`;
+        card.style.animationDelay = (i * 0.05) + 's';
+        card.onclick = () => card.classList.add('revealed');
+        card.innerHTML = `
+          <div class="vocab-en">${v.en}</div>
+          <div class="vocab-hint">${v.hint}</div>
+          <div class="vocab-divider"></div>
+          <div class="vocab-mn-wrap">
+            <div class="vocab-mn">${v.mn}</div>
+            <div class="vocab-mn-hint">tap to reveal</div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    });
+  }
+
+  function revealAll() {
+    document.querySelectorAll('.vocab-card').forEach(c => c.classList.add('revealed'));
+  }
+
+  // Tab switching
+  function switchTab(name) {
+    document.querySelectorAll('.nav-btn').forEach((b, i) => {
+      b.classList.toggle('active', ['review','vocab'][i] === name);
+    });
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  // Review answers
+  let revealed = 0;
+  function reveal(btn) {
+    const ans = btn.nextElementSibling;
+    const isOpen = ans.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Hide Answer' : 'Show Answer';
+    if (isOpen) revealed++;
+    else revealed = Math.max(0, revealed - 1);
+    document.getElementById('score-display').innerHTML = revealed + ' <span>/ 10</span>';
+    document.getElementById('prog-label').textContent = revealed + ' of 10 revealed';
+    document.getElementById('prog-bar').style.width = (revealed * 10) + '%';
+  }
+
+  // Flashcard mode
+  let fcIndex = 0;
+  let fcFlipped = false;
+
+  function setMode(mode) {
+    document.getElementById('mode-list').classList.toggle('active', mode === 'list');
+    document.getElementById('mode-flash').classList.toggle('active', mode === 'flash');
+    document.getElementById('list-mode').classList.toggle('hidden', mode !== 'list');
+    document.getElementById('flash-mode').classList.toggle('active', mode === 'flash');
+    if (mode === 'flash') loadCard(fcIndex);
+  }
+
+  function loadCard(i) {
+    fcFlipped = false;
+    const v = allVocab[i];
+    document.getElementById('fc-en-word').textContent = v.en;
+    document.getElementById('fc-hint').textContent = v.hint;
+    document.getElementById('fc-mn-word').textContent = v.mn;
+    document.getElementById('fc-front').classList.remove('hidden');
+    document.getElementById('fc-back').classList.add('hidden');
+    document.getElementById('fc-counter').textContent = (i+1) + ' / ' + allVocab.length;
+  }
+
+  function flipCard() {
+    fcFlipped = !fcFlipped;
+    document.getElementById('fc-front').classList.toggle('hidden', fcFlipped);
+    document.getElementById('fc-back').classList.toggle('hidden', !fcFlipped);
+  }
+
+  function nextCard() {
+    fcIndex = (fcIndex + 1) % allVocab.length;
+    loadCard(fcIndex);
+  }
+  function prevCard() {
+    fcIndex = (fcIndex - 1 + allVocab.length) % allVocab.length;
+    loadCard(fcIndex);
+  }
+
+  // Init
+  buildVocabCards();
+</script>
+</body>
+</html>
